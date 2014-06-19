@@ -32,6 +32,7 @@ case class TestFramework(val implClassNames: String*)
 			case head :: tail => 
 				try 
 				{
+					println("DEBUG: Loading the Framework implementation " + head)
 					Some(Class.forName(head, true, loader).newInstance match {
 						case newFramework: Framework => newFramework
 						case oldFramework: OldFramework => new FrameworkWrapper(oldFramework)
