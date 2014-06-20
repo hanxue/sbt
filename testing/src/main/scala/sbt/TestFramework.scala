@@ -28,6 +28,16 @@ case class TestFramework(val implClassNames: String*)
 {
 	@tailrec
 	private def createFramework(loader: ClassLoader, log: Logger, frameworkClassNames: List[String]): Option[Framework] = {
+		println("DEBUG: Class.forName('org.scalatools.testing.Framework'): " +
+			Class.forName("org.scalatools.testing.Framework", true, loader).getProtectionDomain.getCodeSource.getLocation)
+		println("DEBUG: Class.forName('sbt.testing.Framework'): " +
+			Class.forName("sbt.testing.Framework", true, loader).getProtectionDomain.getCodeSource.getLocation)
+		println("DEBUG: Class.forName('org.scalatest.tools.Framework'): " +
+			Class.forName("org.scalatest.tools.Framework", true, loader).getProtectionDomain.getCodeSource.getLocation)
+		//println("DEBUG: Class.forName('org.specs2.runner.Specs2Framework'): " +
+		//	Class.forName("org.specs2.runner.Specs2Framework", true, loader).getProtectionDomain.getCodeSource.getLocation)
+		println("DEBUG: Displaying contents of frameworkClassNames below.")
+		frameworkClassNames.foreach(println)
 		frameworkClassNames match {
 			case head :: tail => 
 				try 
@@ -42,6 +52,9 @@ case class TestFramework(val implClassNames: String*)
 				{ 
 					case e: ClassNotFoundException => 
 						log.debug("Framework implementation '" + head + "' not present."); 
+						createFramework(loader, log, tail)
+					case e: java.lang.NoClassDefFoundError =>
+						println("DEBUG: ramework implementation " + head)
 						createFramework(loader, log, tail)
 				}
 			case Nil => 
