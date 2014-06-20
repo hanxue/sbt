@@ -34,8 +34,8 @@ case class TestFramework(val implClassNames: String*)
 			Class.forName("sbt.testing.Framework", true, loader).getProtectionDomain.getCodeSource.getLocation)
 		println("DEBUG: Class.forName('org.scalatest.tools.Framework'): " +
 			Class.forName("org.scalatest.tools.Framework", true, loader).getProtectionDomain.getCodeSource.getLocation)
-		//println("DEBUG: Class.forName('org.specs2.runner.Specs2Framework'): " +
-		//	Class.forName("org.specs2.runner.Specs2Framework", true, loader).getProtectionDomain.getCodeSource.getLocation)
+		println("DEBUG: Class.forName('org.specs2.runner.Specs2Framework'): " +
+			Class.forName("org.specs2.runner.Specs2Framework", true, loader).getProtectionDomain.getCodeSource.getLocation)
 		println("DEBUG: Displaying contents of frameworkClassNames below.")
 		frameworkClassNames.foreach(println)
 		frameworkClassNames match {
